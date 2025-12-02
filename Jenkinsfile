@@ -23,11 +23,13 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Test Stage'
-                if (fileExists('src/main/resources/index.html')) {
-                    echo "File src/main/resources/index.html found!"
-                }
-                else{
-                    throw new Exception("File not found: src/main/resources/index.html")
+                script{
+                    if (fileExists('src/main/resources/index.html')) {
+                        echo "File src/main/resources/index.html found!"
+                    }
+                    else{
+                        throw new Exception("File not found: src/main/resources/index.html")
+                    }
                 }
                 sh '''
                     npm test
