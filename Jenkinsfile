@@ -24,7 +24,7 @@ pipeline {
             steps {
                 echo 'Test Stage'
                 script{
-                    if (fileExists('src/main/resources/index.html')) {
+                    if (fileExists('build/index.html')) {
                         echo "File src/main/resources/index.html found!"
                     }
                     else{
