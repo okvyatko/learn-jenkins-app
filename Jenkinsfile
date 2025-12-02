@@ -27,7 +27,7 @@ pipeline {
                     echo "File src/main/resources/index.html found!"
                 }
                 else{
-                    throw new Exception("File not found")
+                    throw new Exception("File not found: src/main/resources/index.html")
                 }
                 sh '''
                     npm test
