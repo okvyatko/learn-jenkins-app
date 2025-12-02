@@ -26,6 +26,9 @@ pipeline {
                 if (fileExists('src/main/resources/index.html')) {
                     echo "File src/main/resources/index.html found!"
                 }
+                else{
+                    throw new Exception("File not found")
+                }
                 sh '''
                     npm test
                 '''
