@@ -25,10 +25,10 @@ pipeline {
                 echo 'Test Stage'
                 script{
                     if (fileExists('build/index.html')) {
-                        echo "File src/main/resources/index.html found!"
+                        echo "Filebuild/index.html found!"
                     }
                     else{
-                        throw new Exception("File not found: src/main/resources/index.html")
+                        throw new Exception("File not found: build/index.html")
                     }
                 }
                 sh '''
