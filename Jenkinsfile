@@ -23,7 +23,9 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Test Stage'
-                sh '-f ./build/index.html'
+                if (fileExists('src/main/resources/index.html')) {
+                    echo "File src/main/resources/index.html found!"
+                }
                 sh '''
                     npm test
                 '''
