@@ -22,14 +22,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Test Stage'
-                script{
-                    if (fileExists('build/index.html')) {
-                        echo "file: build/index.html found!"
-                    }
-                    else{
-                        throw new Exception("File not found: build/index.html")
-                    }
-                }
+                sh 'test -f build/index.html'
                 sh 'npm test'
             }
         }
