@@ -25,15 +25,13 @@ pipeline {
                 echo 'Test Stage'
                 script{
                     if (fileExists('build/index.html')) {
-                        echo "Filebuild/index.html found!"
+                        echo "file: build/index.html found!"
                     }
                     else{
                         throw new Exception("File not found: build/index.html")
                     }
                 }
-                sh '''
-                    npm test
-                '''
+                sh 'npm test'
             }
         }
     }
