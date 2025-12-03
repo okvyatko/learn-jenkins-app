@@ -51,16 +51,7 @@ pipeline {
 
                     npm install serve
                     node_modules/.bin/serve -s build &
-                    
-                    # Wait for server to be ready (max 10 seconds)
-                    for i in {1..10}; do
-                        if curl -f -s http://localhost:3000 > /dev/null; then
-                            break
-                        fi
-                        sleep 1
-                    done
-                    
-                    # Run tests
+                    sleep 10
                     npx playwright test
                     
                     # Stop server
