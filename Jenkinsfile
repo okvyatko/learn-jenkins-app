@@ -47,7 +47,7 @@ pipeline {
             steps {
                 echo 'Initializing server'
                 sh '''
-                    npm install -g serve
+                    npm install serve
                     serve -s build
                     npx playwright test
                 '''
