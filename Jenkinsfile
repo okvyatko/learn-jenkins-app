@@ -7,7 +7,6 @@ pipeline {
     }
     stages {
         stage ('build'){
-
             steps {
                 sh '''
                     ls -la
@@ -19,13 +18,30 @@ pipeline {
                 '''
             }
         }
-        stage('Test') {
+
+        stage('Unit Test') {
             steps {
-                echo 'Test Stage'
+                echo 'Unit Test Stage'
                 sh '''
                 test -f build/index.html
                 npm test
                 '''
+            }
+        }
+        stage('E2E Test Stage') {
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                    reuseNode true
+                }
+            }
+            steps {
+            echo 'Initializing server'
+                sh '''
+                    npm install -g serve
+                    serve -s build
+                '''
+                echo 'Server Initialized'
             }
         }
     }
