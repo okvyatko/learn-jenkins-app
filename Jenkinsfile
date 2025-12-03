@@ -47,9 +47,22 @@ pipeline {
             steps {
                 echo 'Initializing server'
                 sh '''
-                    npm install serve
-                    node_modules/.bin/serve -s build &
+                    # Start server in background
+                    npx serve -s build &
+                    
+                    # Wait for server to be ready (max 10 seconds)
+                    for i in {1..10}; do
+                        if curl -f -s http://localhost:3000 > /dev/null; then
+                            break
+                        fi
+                        sleep 1
+                    done
+                    
+                    # Run tests
                     npx playwright test
+                    
+                    # Stop server
+                    pkill -f "serve -s build" || true
                 '''
                 echo 'Server Initialized'
             }
@@ -58,8 +71,8 @@ pipeline {
 
     post {
         always {
-            sh 'test -f test-results/junit.xml'
-            junit 'test-results/junit.xml'
+            sh 'test -f jest-test-results/junit.xml'
+            junit 'jest-test-results/junit.xml'
         }
     }
 }
