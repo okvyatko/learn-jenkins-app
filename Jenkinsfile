@@ -48,7 +48,9 @@ pipeline {
                 echo 'Initializing server'
                 sh '''
                     # Start server in background
-                    npx serve -s build &
+
+                    npm install serve
+                    node_modules/.bin/serve -s build &
                     
                     # Wait for server to be ready (max 10 seconds)
                     for i in {1..10}; do
