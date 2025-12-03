@@ -32,6 +32,7 @@ pipeline {
 
     post {
         always {
+            sh 'test -f test-results/junit.xml'
             junit 'test-results/junit.xml'
         }
     }
