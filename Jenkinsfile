@@ -50,12 +50,12 @@ pipeline {
                     # Start server in background
 
                     npm install serve
-                    node_modules/.bin/serve -s build &
-                    sleep 10
-                    npx playwright test
-                    
-                    # Stop server
-                    pkill -f "serve -s build" || true
+                    '''
+                sh 'node_modules/.bin/serve -s build &'
+                   
+                sh '''
+                sleep 10
+                npx playwright test    
                 '''
                 echo 'Server Initialized'
             }
