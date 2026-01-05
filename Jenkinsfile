@@ -21,40 +21,44 @@ pipeline {
             }
         }
 
-        stage('Unit Test') {
-            agent {
-                docker {
-                    image 'node:18-alpine'
-                    reuseNode true
+        stage ('Run Tests'){
+            parallel{
+            stage('Unit Test') {
+                agent {
+                    docker {
+                        image 'node:18-alpine'
+                        reuseNode true
+                    }
                 }
-            }
-            steps {
-                echo 'Unit Test Stage'
-                sh '''
-                    test -f build/index.html
-                    npm test
-                '''
-            }
-        }
-
-        stage('E2E Test') {
-            agent {
-                docker {
-                    image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
-                    reuseNode true
-                }
-            }
-            steps {
-                echo 'Initializing server'
+                steps {
+                    echo 'Unit Test Stage'
                     sh '''
-                        npm install serve
-                        nohup node_modules/.bin/serve -s build > serve.log 2>&1 &
-                        echo "Server started"
-                        sleep 5
-
-                        npx playwright test --reporter=html
+                        test -f build/index.html
+                        npm test
                     '''
                 }
+            }
+
+            stage('E2E Test') {
+                agent {
+                    docker {
+                        image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
+                        reuseNode true
+                    }
+                }
+                steps {
+                    echo 'Initializing server'
+                        sh '''
+                            npm install serve
+                            nohup node_modules/.bin/serve -s build > serve.log 2>&1 &
+                            echo "Server started"
+                            sleep 5
+
+                            npx playwright test --reporter=html
+                        '''
+                    }
+            }
+        }
         }
     }
 
