@@ -52,7 +52,7 @@ pipeline {
                         echo "Server started"
                         sleep 5
 
-                        npx playwright test
+                        npx playwright test --reporter=html
                     '''
                 }
         }
