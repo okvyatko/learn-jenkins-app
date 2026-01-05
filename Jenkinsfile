@@ -62,6 +62,7 @@ pipeline {
         always {
             sh 'test -f jest-test-results/junit.xml'
             junit 'jest-test-results/junit.xml'
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
         }
     }
 }
